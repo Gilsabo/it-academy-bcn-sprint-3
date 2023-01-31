@@ -82,11 +82,12 @@ function buy(id) {
 
         if (products[i].id === id) {
             console.log(products[i])
-           return cartList.push(products[i]);
-            
+            return cartList.push(products[i]);
+
         }
     }
 }
+
 
 
 // Exercise 2
@@ -98,10 +99,9 @@ function cleanCart() {
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
-    let totalPrice=0;
-    for(let i = 0; i<cartList.length; i ++){
-       totalPrice += cartList[i].price;
-    
+    let totalPrice = 0;
+    for (let i = 0; i < cartList.length; i++) {
+        totalPrice += cartList[i].price;
     }
     return totalPrice;
 
@@ -109,41 +109,80 @@ function calculateTotal() {
 
 
 
-
-
 // Exercise 4
-function generateCart() {
+function generateCart(cartList) {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
+    for (let i = 0; i < cartList.length; i++) {
+        if (cart.includes(cartList[i])) {
+            cart[cart.indexOf(cartList[i])].quantity += 1
+            console.log(cart.indexOf(cartList[i]));
+            console.log(cartList[i].id)
+        } else {
+            console.log('not found, pushed');
+            cartList[i].quantity = 1;
+            cart.push(cartList[i])
+        }
+    }
 }
+
+
+/*
+  const object = (object) => object.id === cartList[i].id;
+
+        if (cart.some(object)) {
+            // f
+            cartList[i].quantity += 1;
+
+            console.log(cartList[i].id)
+
+
+        } else {
+            console.log('push');
+            cartList[i].quantity = 1;
+            cart.push(cartList[i])
+
+        }
+
+
+*/
 
 // Exercise 5
-function applyPromotionsCart() {
+function applyPromotionsCart(cart) {
     // Apply promotions to each item in the array "cart"
+    for (let i = 0; i < cart.length; i++) {
+        if (cart[i].name === 'cooking oil' && cart[i].quantity >= cart[i].offer.number) {
+            cart[i].subtotalWithDiscountcart = (cart[i].price * cart[i].quantity - 10) - (((cart[i].price * cart[i].quantity - 10) * cart[i].offer.percent / 100))
+            console.log('oil');
+        } else if (cart[i].name === 'Instant cupcake mixture' && cart[i].quantity >= cart[i].offer.number) {
+            cart[i].subtotalWithDiscountcart = ((cart[i].price * cart[i].quantity) - (cart[i].price * cart[i].quantity * 2 / 3)) - (((cart[i].price * cart[i].quantity) - (cart[i].price * cart[i].quantity * 2 / 3)) * cart[i].offer.percent / 100)
+            console.log(cart[i].subtotalWithDiscountcart);
+        }
+    }
 }
 
-// Exercise 6
-function printCart() {
-    // Fill the shopping cart modal manipulating the shopping cart dom
-}
+    // Exercise 6
+    function printCart() {
+        // Fill the shopping cart modal manipulating the shopping cart dom
+    }
 
 
-// ** Nivell II **
+    // ** Nivell II **
 
-// Exercise 7
-function addToCart(id) {
-    // Refactor previous code in order to simplify it 
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cart array or update its quantity in case it has been added previously.
-}
+    // Exercise 7
+    function addToCart(id) {
+        // Refactor previous code in order to simplify it 
+        // 1. Loop for to the array products to get the item to add to cart
+        // 2. Add found product to the cart array or update its quantity in case it has been added previously.
+    }
 
-// Exercise 8
-function removeFromCart(id) {
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cartList array
-}
+    // Exercise 8
+    function removeFromCart(id) {
+        // 1. Loop for to the array products to get the item to add to cart
+        // 2. Add found product to the cartList array
+    }
 
-function open_modal() {
-    console.log("Open Modal");
-    printCart();
-}
+    function open_modal() {
+        console.log("Open Modal");
+        printCart();
+    }
