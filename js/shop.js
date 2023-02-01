@@ -108,20 +108,28 @@ function calculateTotal() {
 }
 
 
-
+const cartClone =[]
 // Exercise 4
 function generateCart(cartList) {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
+    
     for (let i = 0; i < cartList.length; i++) {
+        let cloneObject=0;
         if (cart.includes(cartList[i])) {
-            cart[cart.indexOf(cartList[i])].quantity += 1
-            console.log(cart.indexOf(cartList[i]));
-            console.log(cartList[i].id)
+            const indexOfcloneObject = cart.indexOf(cartList[i])
+            
+            cartClone[indexOfcloneObject].quantity +=1;
+            console.log('found',cartClone)
+
+
         } else {
             console.log('not found, pushed');
             cartList[i].quantity = 1;
             cart.push(cartList[i])
+            cloneObject = { ...cartList[i]}
+            cartClone.push(cloneObject)
+            
         }
     }
 }
@@ -148,15 +156,15 @@ function generateCart(cartList) {
 */
 
 // Exercise 5
-function applyPromotionsCart(cart) {
-    // Apply promotions to each item in the array "cart"
-    for (let i = 0; i < cart.length; i++) {
-        if (cart[i].name === 'cooking oil' && cart[i].quantity >= cart[i].offer.number) {
-            cart[i].subtotalWithDiscountcart = (cart[i].price * cart[i].quantity - 10) - (((cart[i].price * cart[i].quantity - 10) * cart[i].offer.percent / 100))
+function applyPromotionsCart(cartClone) {
+    // Apply promotions to each item in the array "cartClone"
+    for (let i = 0; i < cartClone.length; i++) {
+        if (cartClone[i].name === 'cooking oil' && cartClone[i].quantity >= cartClone[i].offer.number) {
+            cartClone[i].subtotalWithDiscountcartClone = (cartClone[i].price * cartClone[i].quantity - 10) - (((cartClone[i].price * cartClone[i].quantity - 10) * cartClone[i].offer.percent / 100))
             console.log('oil');
-        } else if (cart[i].name === 'Instant cupcake mixture' && cart[i].quantity >= cart[i].offer.number) {
-            cart[i].subtotalWithDiscountcart = ((cart[i].price * cart[i].quantity) - (cart[i].price * cart[i].quantity * 2 / 3)) - (((cart[i].price * cart[i].quantity) - (cart[i].price * cart[i].quantity * 2 / 3)) * cart[i].offer.percent / 100)
-            console.log(cart[i].subtotalWithDiscountcart);
+        } else if (cartClone[i].name === 'Instant cupcake mixture' && cartClone[i].quantity >= cartClone[i].offer.number) {
+            cartClone[i].subtotalWithDiscountcartClone = ((cartClone[i].price * cartClone[i].quantity) - (cartClone[i].price * cartClone[i].quantity * 2 / 3)) - (((cartClone[i].price * cartClone[i].quantity) - (cartClone[i].price * cartClone[i].quantity * 2 / 3)) * cartClone[i].offer.percent / 100)
+            console.log(cartClone[i].subtotalWithDiscountcart);
         }
     }
 }
@@ -164,6 +172,8 @@ function applyPromotionsCart(cart) {
     // Exercise 6
     function printCart() {
         // Fill the shopping cart modal manipulating the shopping cart dom
+
+
     }
 
 
