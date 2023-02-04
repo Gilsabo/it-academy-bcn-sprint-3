@@ -70,10 +70,13 @@ const cartList = [];
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
 const cart = [];
 
+
+const cartClone =[]
+
 const total = 0;
 
 // Exercise 1
-
+const countProduct = document.getElementById("count_product")
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
@@ -82,10 +85,12 @@ function buy(id) {
 
         if (products[i].id === id) {
             console.log(products[i])
-            return cartList.push(products[i]);
+            cartList.push(products[i]);
+            countProduct.textContent = cartList.length
 
         }
     }
+    
 }
 
 
@@ -93,23 +98,34 @@ function buy(id) {
 // Exercise 2
 function cleanCart() {
     cartList.length = 0;
+    countProduct.textContent = 0;
+    cart.length=0;
+    
+    totalPriceModal.textContent = `Total: 0$`
+    for(let i = 0; i<cartClone.length; i++){
+    modalCartProducts[i].children[0].textContent='';
+    modalCartProducts[i].children[1].textContent='';
+    modalCartProducts[i].children[2].textContent='';
+    modalCartProducts[i].children[3].textContent='';
+    modalCartProducts[i].classList.add('d-none');
+    }
     cartClone.length=0;
-
 }
 
 // Exercise 3
-function calculateTotal() {
+function calculateTotal(cartClone) {
     // Calculate total price of the cart using the "cartList" array
     let totalPrice = 0;
-    for (let i = 0; i < cartList.length; i++) {
-        totalPrice += cartList[i].price;
+    for (let i = 0; i < cartClone.length; i++) {
+        if(cartClone[i].hasOwnProperty('subtotalWithDiscountcartClone')){
+        totalPrice += cartClone[i].subtotalWithDiscountcartClone;
+        }else{
+        totalPrice += cartClone[i].price*cartClone[i].quantity
+        }
     }
     return totalPrice;
-
 }
 
-
-const cartClone =[]
 // Exercise 4
 function generateCart(cartList) {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
@@ -133,26 +149,6 @@ function generateCart(cartList) {
 }
 
 
-/*
-  const object = (object) => object.id === cartList[i].id;
-
-        if (cart.some(object)) {
-            // f
-            cartList[i].quantity += 1;
-
-            console.log(cartList[i].id)
-
-
-        } else {
-            console.log('push');
-            cartList[i].quantity = 1;
-            cart.push(cartList[i])
-
-        }
-
-
-*/
-
 // Exercise 5
 function applyPromotionsCart(cartClone) {
     // Apply promotions to each item in the array "cartClone"
@@ -169,12 +165,13 @@ function applyPromotionsCart(cartClone) {
 
     const cartListModal=document.getElementById("cart_list")
     const modalCartProducts= cartListModal.getElementsByTagName("tr")
+    const totalPriceModal = document.getElementById("total_price")
 
     // Exercise 6
-    cleanCart(cartClone)
    function printCart(cartClone) {
         // Fill the shopping cart modal manipulating the shopping cart dom
         applyPromotionsCart(cartClone)
+        calculateTotal(cartClone)
         for(let i = 0; i<cartClone.length; i++){
             if (cartClone.length !==0){
                 console.log( modalCartProducts[i].children[0])
@@ -192,10 +189,17 @@ function applyPromotionsCart(cartClone) {
             }
         }
    
-       
-
+        totalPriceModal.textContent = `Total: ${calculateTotal(cartClone)}$`
 
     } 
+
+
+    const myModalEl = document.getElementById('cartModal')
+    myModalEl.addEventListener('hidden.bs.modal', () => {
+        console.log('hidden modal')
+        cartClone.length=0;
+        cart.length=0;
+})
 
 
     // ** Nivell II **
