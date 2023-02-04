@@ -93,6 +93,7 @@ function buy(id) {
 // Exercise 2
 function cleanCart() {
     cartList.length = 0;
+    cartClone.length=0;
 
 }
 
@@ -115,21 +116,18 @@ function generateCart(cartList) {
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
     
     for (let i = 0; i < cartList.length; i++) {
+        /* create clone objects from cartList to avoid mutation when adding products to same object */
         let cloneObject=0;
         if (cart.includes(cartList[i])) {
             const indexOfcloneObject = cart.indexOf(cartList[i])
-            
             cartClone[indexOfcloneObject].quantity +=1;
             console.log('found',cartClone)
-
-
         } else {
             console.log('not found, pushed');
             cartList[i].quantity = 1;
             cart.push(cartList[i])
             cloneObject = { ...cartList[i]}
             cartClone.push(cloneObject)
-            
         }
     }
 }
@@ -169,12 +167,35 @@ function applyPromotionsCart(cartClone) {
     }
 }
 
+    const cartListModal=document.getElementById("cart_list")
+    const modalCartProducts= cartListModal.getElementsByTagName("tr")
+
     // Exercise 6
-    function printCart() {
+    cleanCart(cartClone)
+   function printCart(cartClone) {
         // Fill the shopping cart modal manipulating the shopping cart dom
+        applyPromotionsCart(cartClone)
+        for(let i = 0; i<cartClone.length; i++){
+            if (cartClone.length !==0){
+                console.log( modalCartProducts[i].children[0])
+                modalCartProducts[i].classList.remove('d-none');
+                modalCartProducts[i].children[0].textContent=cartClone[i].name
+                modalCartProducts[i].children[1].textContent=cartClone[i].price
+                modalCartProducts[i].children[2].textContent=cartClone[i].quantity
+                    if(cartClone[i].hasOwnProperty('subtotalWithDiscountcartClone'))
+                    modalCartProducts[i].children[3].textContent=cartClone[i].subtotalWithDiscountcartClone 
+                    else{
+                        modalCartProducts[i].children[3].textContent=cartClone[i].price*cartClone[i].quantity
+                    }               
+            }else{
+                modalCartProducts[i].classList.add('d-none');
+            }
+        }
+   
+       
 
 
-    }
+    } 
 
 
     // ** Nivell II **
@@ -194,5 +215,6 @@ function applyPromotionsCart(cartClone) {
 
     function open_modal() {
         console.log("Open Modal");
-        printCart();
+        generateCart(cartList)
+        printCart(cartClone);
     }

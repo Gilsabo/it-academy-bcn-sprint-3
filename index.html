@@ -76,7 +76,7 @@
 								</div>
 							</div>
 							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-								<div class="text-center"><button type="button" onclick="buy(1)" class="btn btn-outline-dark">Add to cart</button></div>
+								<div class="text-center"><button type="button" onclick="buy(1);" class="btn btn-outline-dark">Add to cart</button></div>
 							</div>
 						</div>
 					</div>
@@ -236,29 +236,65 @@
 						  <th scope="col">Total <small>(with discount)</small></th>
 						</tr>
 					  </thead>
-					  <tbody id="cart_list">
-						<tr>
-						  <th scope="row">Cooking oil</th>
-						  <td>$10.5</td>
-						  <td>2</td>
-						  <td>$21</td>
+					  <tbody id="cart_list" >
+						<tr class="d-none">
+						  <th scope="row"></th>
+						  <td></td>
+						  <td></td>
+						  <td></td>
 						</tr>
-						<tr>
-						  <th scope="row">Pasta</th>
-						  <td>$6.25</td>
-						  <td>1</td>
-						  <td>$6.25</td>
+						<tr class="d-none">
+						  <th scope="row"></th>
+						  <td></td>
+						  <td></td>
+						  <td></td>
 						</tr>
-						<tr>
-						  <th scope="row">Lawn dress</th>
-						  <td>$15</td>
-						  <td>3</td>
-						  <td>$45</td>
+						<tr class="d-none">
+						  <th scope="row"></th>
+						  <td></td>
+						  <td></td>
+						  <td></td>
 						</tr>
+						<tr class="d-none">
+							<th scope="row"></th>
+							<td></td>
+							<td></td>
+							<td></td>
+						  </tr>
+						  <tr class="d-none">
+							<th scope="row"></th>
+							<td></td>
+							<td></td>
+							<td></td>
+						  </tr>
+						  <tr class="d-none">
+							<th scope="row"></th>
+							<td></td>
+							<td></td>
+							<td></td>
+						  </tr>
+						  <tr class="d-none">
+							<th scope="row"></th>
+							<td></td>
+							<td></td>
+							<td></td>
+						  </tr>
+						  <tr class="d-none">
+							<th scope="row"></th>
+							<td></td>
+							<td></td>
+							<td></td>
+						  </tr>
+						  <tr class="d-none">
+							<th scope="row"></th>
+							<td></td>
+							<td></td>
+							<td></td>
+						  </tr>
 					  </tbody>
 				  </table>
 				  <div class="text-center fs-3">
-					Total: $<span id="total_price">100</span>
+					<span id="total_price">Total: $</span>
 				  </div>
 				  <div class="text-center"> 
 					<a href="checkout.html" class="btn btn-primary m-3">Checkout</a>
