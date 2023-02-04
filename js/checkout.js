@@ -32,6 +32,7 @@ function validate() {
 		error++;
 	} else {
 		errorName.style.display = "none"
+		fName.style.border="2px solid #04AA6B"	
 	}
 
 	if (fLastN.value == "" || fLastN.value.length < 3 || !fName.value.match(checkNames)) {
@@ -40,6 +41,7 @@ function validate() {
 		fLastN.style.border="thick solid #EA4B4B"
 	} else {
 		errorLastN.style.display = "none"
+		fLastN.style.border="2px solid #04AA6B"	
 	}
 
 	if (fEmail.value == "" || fEmail.value.length < 3 || !fEmail.value.match(checkEmail)) {
@@ -47,23 +49,27 @@ function validate() {
 		errorEmail.style.display = "block"
 		fEmail.style.border="thick solid #EA4B4B"
 	}else{
-		errorEmail.style.display = "none"	
+		errorEmail.style.display = "none"
+		fEmail.style.border="2px solid #04AA6B"	
 	}
 
 	if (fAddress == "" || fAddress.value.length < 3) {
 		error++
 		errorAddress.style.display = "block"
-		fAdress.style.border="thick solid #EA4B4B"
+		fAddress.style.border="thick solid #EA4B4B"
 	}else{
 		errorAddress.style.display = "none"
+		fAddress.style.border="2px solid #04AA6B"
+
 	}
 
-	if (fPassword == "" || fPassword.value.length < 3 || !fPassword.value.match(checkPassword)) {
+	if (fPassword == "" || fPassword.value.length < 4 || !fPassword.value.match(checkPassword)) {
 		error++;
 		errorPassword.style.display = "block"
 		fPassword.style.border="thick solid #EA4B4B"
 	}else{
 		errorPassword.style.display = "none"
+		fPassword.style.border="2px solid #04AA6B"
 	}
 
 	if (fPhone == "" || fPhone.value.length < 9 || !fPhone.value.match(checkPhone)) {
@@ -72,6 +78,7 @@ function validate() {
 		error++;
 	}else{
 		errorPhone.style.display = "none"
+		fPhone.style.border="2px solid #04AA6B"
 
 	}
 
