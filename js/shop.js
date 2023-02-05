@@ -70,10 +70,8 @@ const cartList = [];
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
 const cart = [];
 
+const cartClone = []
 
-const cartClone =[]
-
-const total = 0;
 
 // Exercise 1
 const countProduct = document.getElementById("count_product")
@@ -90,26 +88,24 @@ function buy(id) {
 
         }
     }
-    
+
 }
-
-
 
 // Exercise 2
 function cleanCart() {
     cartList.length = 0;
     countProduct.textContent = 0;
-    cart.length=0;
-    
+    cart.length = 0;
+
     totalPriceModal.textContent = `Total: 0$`
-    for(let i = 0; i<cartClone.length; i++){
-    modalCartProducts[i].children[0].textContent='';
-    modalCartProducts[i].children[1].textContent='';
-    modalCartProducts[i].children[2].textContent='';
-    modalCartProducts[i].children[3].textContent='';
-    modalCartProducts[i].classList.add('d-none');
+    for (let i = 0; i < cartClone.length; i++) {
+        modalCartProducts[i].children[0].textContent = '';
+        modalCartProducts[i].children[1].textContent = '';
+        modalCartProducts[i].children[2].textContent = '';
+        modalCartProducts[i].children[3].textContent = '';
+        modalCartProducts[i].classList.add('d-none');
     }
-    cartClone.length=0;
+    cartClone.length = 0;
 }
 
 // Exercise 3
@@ -117,10 +113,10 @@ function calculateTotal(cartClone) {
     // Calculate total price of the cart using the "cartList" array
     let totalPrice = 0;
     for (let i = 0; i < cartClone.length; i++) {
-        if(cartClone[i].hasOwnProperty('subtotalWithDiscountcartClone')){
-        totalPrice += cartClone[i].subtotalWithDiscountcartClone;
-        }else{
-        totalPrice += cartClone[i].price*cartClone[i].quantity
+        if (cartClone[i].hasOwnProperty('subtotalWithDiscountcartClone')) {
+            totalPrice += cartClone[i].subtotalWithDiscountcartClone;
+        } else {
+            totalPrice += cartClone[i].price * cartClone[i].quantity
         }
     }
     return totalPrice;
@@ -130,19 +126,19 @@ function calculateTotal(cartClone) {
 function generateCart(cartList) {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
-    
+
     for (let i = 0; i < cartList.length; i++) {
         /* create clone objects from cartList to avoid mutation when adding products to same object */
-        let cloneObject=0;
+        let cloneObject = 0;
         if (cart.includes(cartList[i])) {
             const indexOfcloneObject = cart.indexOf(cartList[i])
-            cartClone[indexOfcloneObject].quantity +=1;
-            console.log('found',cartClone)
+            cartClone[indexOfcloneObject].quantity += 1;
+            console.log('found', cartClone)
         } else {
             console.log('not found, pushed');
             cartList[i].quantity = 1;
             cart.push(cartList[i])
-            cloneObject = { ...cartList[i]}
+            cloneObject = { ...cartList[i] }
             cartClone.push(cloneObject)
         }
     }
@@ -163,62 +159,88 @@ function applyPromotionsCart(cartClone) {
     }
 }
 
-    const cartListModal=document.getElementById("cart_list")
-    const modalCartProducts= cartListModal.getElementsByTagName("tr")
-    const totalPriceModal = document.getElementById("total_price")
+const cartListModal = document.getElementById("cart_list")
+const modalCartProducts = cartListModal.getElementsByTagName("tr")
+const totalPriceModal = document.getElementById("total_price")
 
-    // Exercise 6
-   function printCart(cartClone) {
-        // Fill the shopping cart modal manipulating the shopping cart dom
-        applyPromotionsCart(cartClone)
-        calculateTotal(cartClone)
-        for(let i = 0; i<cartClone.length; i++){
-            if (cartClone.length !==0){
-                console.log( modalCartProducts[i].children[0])
-                modalCartProducts[i].classList.remove('d-none');
-                modalCartProducts[i].children[0].textContent=cartClone[i].name
-                modalCartProducts[i].children[1].textContent=cartClone[i].price
-                modalCartProducts[i].children[2].textContent=cartClone[i].quantity
-                    if(cartClone[i].hasOwnProperty('subtotalWithDiscountcartClone'))
-                    modalCartProducts[i].children[3].textContent=cartClone[i].subtotalWithDiscountcartClone 
-                    else{
-                        modalCartProducts[i].children[3].textContent=cartClone[i].price*cartClone[i].quantity
-                    }               
-            }else{
-                modalCartProducts[i].classList.add('d-none');
+// Exercise 6
+function printCart(cartClone) {
+    // Fill the shopping cart modal manipulating the shopping cart dom
+    applyPromotionsCart(cartClone)
+    calculateTotal(cartClone)
+
+    for (let i = 0; i < cartClone.length; i++) {
+        if (cartClone.length !== 0) {
+            console.log(modalCartProducts[i].children[0])
+            modalCartProducts[i].classList.remove('d-none');
+            modalCartProducts[i].children[0].textContent = cartClone[i].name
+            modalCartProducts[i].children[1].textContent = cartClone[i].price
+            modalCartProducts[i].children[2].textContent = cartClone[i].quantity
+
+            const decrementButton = document.createElement("button");
+            decrementButton.type = "button";
+            decrementButton.innerText = "-";
+            decrementButton.className = "btn btn-light btn-sm decrement";
+            decrementButton.setAttribute("onclick", `removeFromCart(${cartClone[i].id})`);
+            modalCartProducts[i].children[2].appendChild(decrementButton);
+            if (cartClone[i].hasOwnProperty('subtotalWithDiscountcartClone'))
+                modalCartProducts[i].children[3].textContent = cartClone[i].subtotalWithDiscountcartClone
+            else {
+                modalCartProducts[i].children[3].textContent = cartClone[i].price * cartClone[i].quantity
             }
+        } else {
+            modalCartProducts[i].classList.add('d-none');
         }
-   
-        totalPriceModal.textContent = `Total: ${calculateTotal(cartClone)}$`
+    }
 
-    } 
+    totalPriceModal.textContent = `Total: ${calculateTotal(cartClone)}$`;
+
+}
 
 
-    const myModalEl = document.getElementById('cartModal')
-    myModalEl.addEventListener('hidden.bs.modal', () => {
-        console.log('hidden modal')
-        cartClone.length=0;
-        cart.length=0;
+const myModalEl = document.getElementById('cartModal')
+myModalEl.addEventListener('hidden.bs.modal', () => {
+    console.log('hidden modal')
+    cartClone.length = 0;
+    cart.length = 0;
 })
 
 
-    // ** Nivell II **
+// ** Nivell II **
 
-    // Exercise 7
-    function addToCart(id) {
-        // Refactor previous code in order to simplify it 
-        // 1. Loop for to the array products to get the item to add to cart
-        // 2. Add found product to the cart array or update its quantity in case it has been added previously.
+// Exercise 7
+function addToCart(cartClone) {
+    // Refactor previous code in order to simplify it 
+    // 1. Loop for to the array products to get the item to add to cart
+    // 2. Add found product to the cart array or update its quantity in case it has been added previously.
+}
+
+// Exercise 8
+
+
+
+
+
+function removeFromCart(id) {
+
+    for (let i = 0; i < cartClone.length; i++) {
+        if (cartClone[i].id === id) {
+            console.log('found')
+            modalCartProducts[i].children[2].textContent = --cartClone[i].quantity
+        
     }
 
-    // Exercise 8
-    function removeFromCart(id) {
-        // 1. Loop for to the array products to get the item to add to cart
-        // 2. Add found product to the cartList array
-    }
 
-    function open_modal() {
-        console.log("Open Modal");
-        generateCart(cartList)
-        printCart(cartClone);
-    }
+}
+
+}
+
+
+
+
+
+function open_modal() {
+    console.log("Open Modal");
+    generateCart(cartList)
+    printCart(cartClone);
+}
