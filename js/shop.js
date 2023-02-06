@@ -70,6 +70,8 @@ const cartList = [];
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
 const cart = [];
 
+// Shallow copy of cart. When we add quantity in the same object when repeated, only will be modified here, not in cart and CartArray. 
+// Avoid duplications of quantites when function printCart invoked
 const cartClone = []
 
 
@@ -85,10 +87,8 @@ function buy(id) {
             console.log(products[i])
             cartList.push(products[i]);
             countProduct.textContent = cartList.length
-
         }
     }
-
 }
 
 // Exercise 2
@@ -96,6 +96,7 @@ function cleanCart() {
     cartList.length = 0;
     countProduct.textContent = 0;
     cart.length = 0;
+// Remove objects from array but also from modal
 
     totalPriceModal.textContent = `Total: 0$`
     for (let i = 0; i < cartClone.length; i++) {
@@ -172,17 +173,25 @@ function printCart(cartClone) {
     for (let i = 0; i < cartClone.length; i++) {
         if (cartClone.length !== 0) {
             console.log(modalCartProducts[i].children[0])
+            // show product that was clicked
             modalCartProducts[i].classList.remove('d-none');
+            // Creat a span because when clicked the minus button would disappear the button without the span
+            const span = document.createElement("span");
+            span.append(cartClone[i].quantity);
+            modalCartProducts[i].children[2].appendChild(span)
             modalCartProducts[i].children[0].textContent = cartClone[i].name
             modalCartProducts[i].children[1].textContent = cartClone[i].price
-            modalCartProducts[i].children[2].textContent = cartClone[i].quantity
-
-            const decrementButton = document.createElement("button");
+            
+            // Create button dynamically to give the decrease object option to the user
+            const decrementButton = document.createElement("input");
             decrementButton.type = "button";
-            decrementButton.innerText = "-";
-            decrementButton.className = "btn btn-light btn-sm decrement";
+            decrementButton.name = 'decrementButton'
+            decrementButton.id = 'decrementButton'
+            decrementButton.value = "-";
+            decrementButton.className = "btn btn-light btn-sm";
             decrementButton.setAttribute("onclick", `removeFromCart(${cartClone[i].id})`);
             modalCartProducts[i].children[2].appendChild(decrementButton);
+            // show in the modal the price of the product with or withour the applied discount
             if (cartClone[i].hasOwnProperty('subtotalWithDiscountcartClone'))
                 modalCartProducts[i].children[3].textContent = cartClone[i].subtotalWithDiscountcartClone
             else {
@@ -197,14 +206,24 @@ function printCart(cartClone) {
 
 }
 
+// add eventlistener when closing modal. Will set cartClone and cart to zero and remove buttons and spans created
+// dinamically in the printCart to avoid duplications when modal opened again.
 
 const myModalEl = document.getElementById('cartModal')
 myModalEl.addEventListener('hidden.bs.modal', () => {
+
     console.log('hidden modal')
     cartClone.length = 0;
     cart.length = 0;
-})
 
+    for (let i = 0; i < modalCartProducts.length; i++) {
+        if (modalCartProducts[i].children[2].children.length > 0) {
+            modalCartProducts[i].children[2].children[0].remove()
+            modalCartProducts[i].children[2].children[0].remove()
+            console.log('removeChild')
+        }
+    }
+})
 
 // ** Nivell II **
 
@@ -217,23 +236,34 @@ function addToCart(cartClone) {
 
 // Exercise 8
 
-
-
-
-
 function removeFromCart(id) {
 
     for (let i = 0; i < cartClone.length; i++) {
         if (cartClone[i].id === id) {
             console.log('found')
-            modalCartProducts[i].children[2].textContent = --cartClone[i].quantity
-        
+            --cartClone[i].quantity
+            --modalCartProducts[i].children[2].children[0].textContent;
+        }
     }
+}
 
+
+
+/* cartClone.forEach((cartClones)=> {
+    if(cartClones.id==id){
+        --cartClones.quantity 
+        --modalCartProducts[0].children[2].children[0].textContent
+    }
+});
 
 }
 
-}
+*/
+
+
+
+
+
 
 
 
