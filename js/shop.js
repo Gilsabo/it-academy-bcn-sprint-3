@@ -239,21 +239,50 @@ function addToCart(cartClone) {
 function removeFromCart(id) {
 
     for (let i = 0; i < cartClone.length; i++) {
-        if (cartClone[i].id === id && cartClone[i].quantity > 1 && cartClone.length>1) {
+        if ((cartClone[i].id === id && cartClone[i].quantity > 1 && cartClone.length>1) ||
+        ((cartClone[i].id === id && cartClone[i].quantity > 1 && cartClone.length==1)) ) {
             --cartClone[i].quantity
             --modalCartProducts[i].children[2].children[0].textContent
             modalCartProducts[i].children[3].textContent -= cartClone[i].price
             --countProduct.textContent
             const indexCartlistRemove = cartList.map(object => object.id).indexOf(cartClone[i].id)
-            console.log(cartList.splice(indexCartlistRemove, 1))
+            cartList.splice(indexCartlistRemove, 1)
             totalPriceModal.textContent = `Total: ${calculateTotal(cartClone)}$`;
 
-            console.log([i])
+            console.log([i], 'nivell 1')
+
+        }else if(cartClone[i].id === id && cartClone[i].quantity == 1 && cartClone.length>1){
+            --cartClone[i].quantity
+            --countProduct.textContent
+            const indexCartlistRemove = cartList.map(object => object.id).indexOf(cartClone[i].id)
+            cartList.splice(indexCartlistRemove, 1)
+            totalPriceModal.textContent = `Total: ${calculateTotal(cartClone)}$`;
+            modalCartProducts[i].children[1].textContent =''
+            modalCartProducts[i].children[3].textContent =''
+            modalCartProducts[i].children[2].children[0].remove()
+             modalCartProducts[i].children[2].children[0].remove()
+            modalCartProducts[i].children[0].textContent=''
+            const indexCartCloneRemove = cartClone.map(object => object.id).indexOf(cartClone[i].id)
+            console.log(cartClone.splice(indexCartCloneRemove, 1))
+            modalCartProducts[i].classList.add('d-none')
+            console.log([i], 'nivell 2')  
+        }else if(cartClone[i].id === id && cartClone[i].quantity ==1 && cartClone.length==1){
+            --cartClone[i].quantity
+            countProduct.textContent = 0
+            const indexCartlistRemove = cartList.map(object => object.id).indexOf(cartClone[i].id)
+            cartList.splice(indexCartlistRemove, 1)
+            const indexCartCloneRemove = cartClone.map(object => object.id).indexOf(cartClone[i].id)
+            cartClone.splice(indexCartCloneRemove, 1)
+            modalCartProducts[i].children[1].textContent =''
+            modalCartProducts[i].children[3].textContent =''
+            modalCartProducts[i].children[2].children[0].remove()
+            modalCartProducts[i].children[2].children[0].remove()
+            modalCartProducts[i].children[0].textContent=''
+            totalPriceModal.textContent = `Total: ${calculateTotal(cartClone)}$`;
+            modalCartProducts[i].classList.add('d-none')
+            console.log('nivell3')
 
 
-    
-
-         
         }
     }
 
