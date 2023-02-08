@@ -96,7 +96,7 @@ function cleanCart() {
     cartList.length = 0;
     countProduct.textContent = 0;
     cart.length = 0;
-// Remove objects from array but also from modal
+    // Remove objects from array but also from modal
 
     totalPriceModal.textContent = `Total: 0$`
     for (let i = 0; i < cartClone.length; i++) {
@@ -181,7 +181,7 @@ function printCart(cartClone) {
             modalCartProducts[i].children[2].appendChild(span)
             modalCartProducts[i].children[0].textContent = cartClone[i].name
             modalCartProducts[i].children[1].textContent = cartClone[i].price
-            
+
             // Create button dynamically to give the decrease object option to the user
             const decrementButton = document.createElement("input");
             decrementButton.type = "button";
@@ -239,32 +239,25 @@ function addToCart(cartClone) {
 function removeFromCart(id) {
 
     for (let i = 0; i < cartClone.length; i++) {
-        if (cartClone[i].id === id) {
-            console.log('found')
+        if (cartClone[i].id === id && cartClone[i].quantity > 1 && cartClone.length>1) {
             --cartClone[i].quantity
-            --modalCartProducts[i].children[2].children[0].textContent;
+            --modalCartProducts[i].children[2].children[0].textContent
+            modalCartProducts[i].children[3].textContent -= cartClone[i].price
+            --countProduct.textContent
+            const indexCartlistRemove = cartList.map(object => object.id).indexOf(cartClone[i].id)
+            console.log(cartList.splice(indexCartlistRemove, 1))
+            totalPriceModal.textContent = `Total: ${calculateTotal(cartClone)}$`;
+
+            console.log([i])
+
+
+    
+
+         
         }
     }
-}
-
-
-
-/* cartClone.forEach((cartClones)=> {
-    if(cartClones.id==id){
-        --cartClones.quantity 
-        --modalCartProducts[0].children[2].children[0].textContent
-    }
-});
 
 }
-
-*/
-
-
-
-
-
-
 
 
 
