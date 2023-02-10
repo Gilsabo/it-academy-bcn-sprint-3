@@ -298,8 +298,6 @@ console.log(id.rowIndex)
 }
 
 
-
-
 function open_modal() {
     console.log("Open Modal");
     generateCart(cartList)
