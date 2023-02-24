@@ -2,7 +2,7 @@
 IT Academy Barcelona Shopping Page sprint-3
 
 ## Description
-This is a shopping page project for the IT Academy Barcelona, created using Bootstrap and Javascript
+This is a [shopping page](https://gilsabo.github.io/it-academy-bcn-sprint-3/) project for the IT Academy Barcelona, created using Bootstrap and Javascript
 ## Features
 - Responsive design using Bootstrap's grid system
 - Product catalog with images, descriptions, and prices
