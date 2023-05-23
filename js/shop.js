@@ -1,6 +1,4 @@
-
-// If you have time, you can move this variable "products" to a json or js file and load the data in this js. It will look more professional
-const products = [
+ const products = [
     {
         id: 1,
         name: 'cooking oil',
@@ -64,6 +62,8 @@ const products = [
         type: 'clothes'
     }
 ]
+
+
 // Array with products (objects) added directly with push(). Products in this array are repeated.
 const cartList = [];
 
@@ -91,6 +91,8 @@ function buy(id) {
     }
 }
 
+const totalPriceModal = document.getElementById("total_price")
+
 // Exercise 2
 function cleanCart() {
     cartList.length = 0;
@@ -110,7 +112,7 @@ function cleanCart() {
 }
 
 // Exercise 3
-function calculateTotal(cartClone) {
+function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
     let totalPrice = 0;
     for (let i = 0; i < cartClone.length; i++) {
@@ -124,7 +126,7 @@ function calculateTotal(cartClone) {
 }
 
 // Exercise 4
-function generateCart(cartList) {
+function generateCart() {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
 
@@ -147,7 +149,7 @@ function generateCart(cartList) {
 
 
 // Exercise 5
-function applyPromotionsCart(cartClone) {
+function applyPromotionsCart() {
     // Apply promotions to each item in the array "cartClone"
     for (let i = 0; i < cartClone.length; i++) {
         if (cartClone[i].name === 'cooking oil' && cartClone[i].quantity >= cartClone[i].offer.number) {
@@ -162,10 +164,10 @@ function applyPromotionsCart(cartClone) {
 
 const cartListModal = document.getElementById("cart_list")
 const modalCartProducts = cartListModal.getElementsByTagName("tr")
-const totalPriceModal = document.getElementById("total_price")
+
 
 // Exercise 6
-function printCart(cartClone) {
+function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
     applyPromotionsCart(cartClone)
     calculateTotal(cartClone)
@@ -194,7 +196,7 @@ function printCart(cartClone) {
             decrementButton.className = "btn btn-light btn-sm";
             decrementButton.setAttribute("onclick", `removeFromCart(${cartClone[i].id})`);
             modalCartProducts[indexCart].children[2].appendChild(decrementButton);
-            // show in the modal the price of the product with or withour the applied discount
+            // show in the modal the price of the product with or without the applied discount
             if (cartClone[i].hasOwnProperty('subtotalWithDiscountcartClone'))
                 modalCartProducts[indexCart].children[3].textContent = cartClone[i].subtotalWithDiscountcartClone
             else {
@@ -231,7 +233,7 @@ myModalEl.addEventListener('hidden.bs.modal', () => {
 // ** Nivell II **
 
 // Exercise 7
-function addToCart(cartClone) {
+function addToCart() {
     // Refactor previous code in order to simplify it 
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cart array or update its quantity in case it has been added previously.
@@ -246,7 +248,7 @@ console.log(id.rowIndex)
         const indexCart = cartClone[i].id-'1'
 
         if ((cartClone[i].id === id && cartClone[i].quantity > 1 && cartClone.length>1) ||
-        ((cartClone[i].id === id && cartClone[i].quantity > 1 && cartClone.length==1)) ) {
+        ((cartClone[i].id === id && cartClone[i].quantity > 1 && cartClone.length===1)) ) {
             --cartClone[i].quantity
             --modalCartProducts[indexCart].children[2].children[0].textContent
             modalCartProducts[indexCart].children[3].textContent -= cartClone[i].price
@@ -258,7 +260,7 @@ console.log(id.rowIndex)
             console.log([i], 'nivell 1')
             console.log(i)
 
-        }else if(cartClone[i].id === id && cartClone[i].quantity == 1 && cartClone.length>1){
+        }else if(cartClone[i].id === id && cartClone[i].quantity === 1 && cartClone.length>1){
             
             --cartClone[i].quantity
             --countProduct.textContent
@@ -274,7 +276,7 @@ console.log(id.rowIndex)
             console.log(cartClone.splice(indexCartCloneRemove, 1))
             modalCartProducts[indexCart].classList.add('d-none')
             console.log([i], 'nivell 2')  
-        }else if(cartClone[i].id === id && cartClone[i].quantity ==1 && cartClone.length==1){
+        }else if(cartClone[i].id === id && cartClone[i].quantity === 1 && cartClone.length === 1){
             
             --cartClone[i].quantity
             countProduct.textContent = 0
