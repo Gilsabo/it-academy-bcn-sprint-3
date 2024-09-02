@@ -84,7 +84,7 @@ function buy(id) {
     for (let i = 0; i < products.length; i++) {
 
         if (products[i].id === id) {
-            console.log(products[i])
+            
             cartList.push(products[i]);
             countProduct.textContent = cartList.length
         }
